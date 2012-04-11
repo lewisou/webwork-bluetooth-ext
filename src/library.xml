@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+	<extension>
+		<entryClass>com.vxmt.blackberry.webwork.ext.bluetooth.BluetoothExtension</entryClass>
+	</extension>
+
+	<features>
+		<feature id="vxmt.bluetooth.basic" version="1.0.0" >Basic Bluetooth Functions</feature>
+	</features>
+</library>
