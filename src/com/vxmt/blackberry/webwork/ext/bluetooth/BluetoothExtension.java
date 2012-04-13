@@ -15,8 +15,7 @@ public final class BluetoothExtension implements WidgetExtension {
 	private BrowserField _browser;
 	private static final String FEATURE_BASIC = "vxmt.bluetooth.basic"; 
 	private static SparseList loadedScripts = new SparseList();
-	
-	
+
 	public String[] getFeatureList() {
 		String[] result = new String[1];
 		result[0] = FEATURE_BASIC;

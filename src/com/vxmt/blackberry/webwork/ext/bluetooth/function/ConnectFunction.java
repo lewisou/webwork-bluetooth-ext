@@ -12,7 +12,8 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 	private BluetoothSerialPort _port;
 	private BrowserField _browser;
     private byte[] _receiveBuffer = new byte[1024];
-
+    private String _callBack;
+    
 	public ConnectFunction(BrowserField bf) {
 		_browser = bf;
 		Arrays.fill(_receiveBuffer, (byte)'a');
@@ -22,6 +23,7 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 		if(_port == null) {
 			BluetoothSerialPortInfo info = getPortInfo((String)args[0]);
 			_port = new BluetoothSerialPort(info, BluetoothSerialPort.BAUD_115200, BluetoothSerialPort.DATA_FORMAT_PARITY_NONE | BluetoothSerialPort.DATA_FORMAT_STOP_BITS_1 | BluetoothSerialPort.DATA_FORMAT_DATA_BITS_8, BluetoothSerialPort.FLOW_CONTROL_NONE, 1024, 1024, this);
+			_callBack = (String)args[1];
 		}
 		return new Boolean(true);
 	}
@@ -34,13 +36,12 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
         int len = 0;
         try {
             if((len = _port.read(_receiveBuffer, 0, length)) != 0) {
-            	js("alert('1');");
             	if(len == 1 && _receiveBuffer[0] == '\r') {
                         _receiveBuffer[1] = '\n';
                         ++len;
             	}
             	len = len - 2;
-                js("alert('" + new String(_receiveBuffer, 0, len) + "');");
+            	js(_callBack + "('" + new String(_receiveBuffer, 0, len) + "');");
             }
         } catch(Exception ioex) {
         	EventLogger.logEvent( 1, ioex.toString().getBytes(), EventLogger.ERROR);
@@ -60,7 +61,7 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 	public void deviceDisconnected() {
 		js("alert('about to close.');");
 		if(_port != null)
-			_port.close();		
+			_port.close();
 	}
 
 	public void dtrStateChange(boolean high) {
