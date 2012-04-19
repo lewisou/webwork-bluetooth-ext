@@ -13,7 +13,7 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 	private BrowserField _browser;
     private byte[] _receiveBuffer = new byte[1024];
     private String _callBack;
-    
+
 	public ConnectFunction(BrowserField bf) {
 		_browser = bf;
 		Arrays.fill(_receiveBuffer, (byte)'a');
@@ -54,7 +54,7 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 	}
 
 	public void deviceConnected(boolean success) {
-		js("alert(" + success + ");");
+		//js("alert(" + success + ");");
 		// TODO Auto-generated method stub
 	}
 

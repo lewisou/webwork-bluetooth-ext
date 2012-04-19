@@ -31,3 +31,8 @@ Connect to bluetooth devices
         handle.connect('BLUETOOTH_SERIVICE_NAME', 'call_back');
     </script>
 
+
+License
+=============
+The software is released under the MIT license:
+www.opensource.org/licenses/MIT
