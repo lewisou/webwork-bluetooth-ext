@@ -18,7 +18,7 @@ List all paired bluetooth devices
         alert(handle.service_list);
     </script>
 
-Connect to bluetooth devices
+Connect to bluetooth device
 -------------
 
     <script>
@@ -29,6 +29,17 @@ Connect to bluetooth devices
 
         var handle = vxmt.bluetooth.basic;
         handle.connect('BLUETOOTH_SERIVICE_NAME', 'call_back');
+
+        bluetooth.connect('uniq_key', 'BLUETOOTH_SERIVICE_NAME', 'call_back');
+        // for example bluetooth.connect('abc', 'DEVICE_BLABLA', 'bluetooth_mess_arrived');
+    </script>
+
+Write bytes to bluetooth device
+-------------
+    <script>
+        // for example, 'abc' is the key you used to connect previously
+        var bluetooth = vxmt.bluetooth.basic;
+        bluetooth.write_back('abc', 'message string');
     </script>
 
 

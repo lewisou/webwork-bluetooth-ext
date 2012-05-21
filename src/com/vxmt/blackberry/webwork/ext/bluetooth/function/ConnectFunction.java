@@ -13,6 +13,7 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 	private BrowserField _browser;
     private byte[] _receiveBuffer = new byte[1024];
     private String _callBack;
+    private String _key;
 
 	public ConnectFunction(BrowserField bf) {
 		_browser = bf;
@@ -21,13 +22,22 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 
 	public Object invoke(Object obj, Object[] args) throws Exception {
 		if(_port == null) {
-			BluetoothSerialPortInfo info = getPortInfo((String)args[0]);
+			_key = (String)args[0];
+			BluetoothSerialPortInfo info = getPortInfo((String)args[1]);
 			_port = new BluetoothSerialPort(info, BluetoothSerialPort.BAUD_115200, BluetoothSerialPort.DATA_FORMAT_PARITY_NONE | BluetoothSerialPort.DATA_FORMAT_STOP_BITS_1 | BluetoothSerialPort.DATA_FORMAT_DATA_BITS_8, BluetoothSerialPort.FLOW_CONTROL_NONE, 1024, 1024, this);
-			_callBack = (String)args[1];
+			_callBack = (String)args[2];
 		}
 		return new Boolean(true);
 	}
 
+	public String getKey() {
+		return _key;
+	}
+
+	public BluetoothSerialPort getPort() {
+		return _port;
+	}
+	
     public void dataReceived(int length) {
     	if(length == -1) {
     		return;
@@ -59,7 +69,7 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 	}
 
 	public void deviceDisconnected() {
-		js("alert('about to close.');");
+//		js("alert('about to close.');");
 		if(_port != null)
 			_port.close();
 	}
@@ -81,5 +91,9 @@ public final class ConnectFunction extends ScriptableFunction implements Bluetoo
 
 	private Object js(String script){
 		return _browser.executeScript(script);
+	}
+
+	public void close() {
+		_port.close();
 	}
 }
