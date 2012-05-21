@@ -1,5 +1,8 @@
 How to add the feature
 =============
+
+Put /lib/bluetooth_ext.jar under the ext folder of your webwork project.
+
 Add this line into your config.xml
 
     <feature id="vxmt.bluetooth.basic" required="true" version="1.0.0" />
